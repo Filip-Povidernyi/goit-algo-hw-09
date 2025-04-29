@@ -1,8 +1,8 @@
 import timeit
 
 
-def find_coins_greedy(amount):
-    coins = [50, 25, 10, 5, 2]
+def find_coins_greedy(amount, coins):
+
     result = {}
     for coin in coins:
         count = amount // coin
@@ -12,8 +12,10 @@ def find_coins_greedy(amount):
     return result
 
 
-def find_min_coins(amount):
-    coins = [50, 25, 10, 5, 2]
+def find_min_coins(amount, coins):
+
+    if amount <= 0:
+        return {}
     min_coins = [0] + [float('inf')] * amount
     last_coin = [0] * (amount + 1)
 
@@ -34,17 +36,21 @@ def find_min_coins(amount):
 
 if __name__ == "__main__":
 
-    greedy_res = find_coins_greedy(113)
-    greedy_time = timeit.timeit(lambda: find_coins_greedy(113), number=1)
-    dp_res = find_min_coins(113)
-    dp_time = timeit.timeit(lambda: find_min_coins(113), number=1)
+    coins = [50, 25, 10, 5, 2, 1]
+    # coins = [50, 25, 10, 5, 2]
+
+    greedy_time = timeit.timeit(
+        lambda: find_coins_greedy(113, coins), number=1)
+    dp_time = timeit.timeit(lambda: find_min_coins(113, coins), number=1)
+    greedy_res = find_coins_greedy(113, coins)
+    dp_res = find_min_coins(113, coins)
 
     print("\n|---------------------|----------------------------|-------------------|")
     print("|      Алгоритм       |         Результат          | Час виконання (с) |")
     print("|---------------------|----------------------------|-------------------|")
     print(
-        f"| Жадібний (Greedy)   | {greedy_res}       |   {greedy_time:.12f}  |")
+        f"| Жадібний (Greedy)   | {greedy_res} |   {greedy_time:.12f}  |")
     print("|---------------------|----------------------------|-------------------|")
     print(
-        f"| Динамічний (DP)     | {dp_res}        |   {dp_time:.12f}  |")
+        f"| Динамічний (DP)     | {dp_res} |   {dp_time:.12f}  |")
     print("|---------------------|----------------------------|-------------------|\n")
